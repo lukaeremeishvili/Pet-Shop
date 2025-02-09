@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: normal;
+  background: none;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
