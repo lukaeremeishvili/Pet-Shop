@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
-// import { Provider } from "react-redux";
-// import { store } from "./store";
+import { Provider } from "react-redux";
+import { store } from "./store";
 // import Sidebar from "./layouts/Sidebar";
 import PageContainer from "./layouts/PageContainer";
 import AnimalsManagePage from "./pages/AnimalsManagePage";
@@ -13,26 +13,26 @@ import AnimalsWithCategoriesManagePage from "./pages/AnimalsWithCategoriesManage
 
 function App() {
   return (
-    // <Provider store={store}>
-    // <Sidebar />
-    <PageContainer>
-      <Routes>
-        <Route path="/" element={<Navigate to="/animals" replace />} />
-        <Route path="/animals" element={<AnimalsPage />} />
-        <Route path="/animals/manage" element={<AnimalsManagePage />} />
-        <Route path="/categories" element={<CategoriesPage />} />
-        <Route path="/categories/manage" element={<CategoriesManagePage />} />
-        <Route
-          path="/animals-with-categories"
-          element={<AnimalsWithCategoriesPage />}
-        />
-        <Route
-          path="/animals-with-categories/manage"
-          element={<AnimalsWithCategoriesManagePage />}
-        />
-      </Routes>
-    </PageContainer>
-    // </Provider>
+    <Provider store={store}>
+      {/* <Sidebar /> */}
+      <PageContainer>
+        <Routes>
+          <Route path="/" element={<Navigate to="/animals" replace />} />
+          <Route path="/animals" element={<AnimalsPage />} />
+          <Route path="/animals/manage" element={<AnimalsManagePage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/categories/manage" element={<CategoriesManagePage />} />
+          <Route
+            path="/animals-with-categories"
+            element={<AnimalsWithCategoriesPage />}
+          />
+          <Route
+            path="/animals-with-categories/manage"
+            element={<AnimalsWithCategoriesManagePage />}
+          />
+        </Routes>
+      </PageContainer>
+    </Provider>
   );
 }
 
