@@ -10,6 +10,7 @@ import CategoriesPage from "./pages/CategoriesPage";
 import CategoriesManagePage from "./pages/CategoriesManagePage";
 import AnimalsWithCategoriesPage from "./pages/AnimalsWithCategoriesPage";
 import AnimalsWithCategoriesManagePage from "./pages/AnimalsWithCategoriesManagePage";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             element={<AnimalsWithCategoriesManagePage />}
           />
         </Routes>
+        <ToastContainer />
       </PageContainer>
     </Provider>
   );
