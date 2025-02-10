@@ -11,6 +11,7 @@ import CategoriesManagePage from "./pages/CategoriesManagePage";
 import AnimalsWithCategoriesPage from "./pages/AnimalsWithCategoriesPage";
 import AnimalsWithCategoriesManagePage from "./pages/AnimalsWithCategoriesManagePage";
 import { ToastContainer } from "react-toastify";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             path="/animals-with-categories/manage"
             element={<AnimalsWithCategoriesManagePage />}
           />
+          <Route  path="*" element={<ErrorPage/>} />
         </Routes>
         <ToastContainer />
       </PageContainer>
