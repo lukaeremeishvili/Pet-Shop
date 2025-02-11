@@ -152,6 +152,14 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
     const newAnimalWithCategory = {
       animal_uuid: selectedAnimal!._uuid,
       category_uuid: selectedCategory!._uuid,
+      name: selectedAnimal!.name,
+      animal_description: selectedAnimal!.description,
+      price: selectedAnimal!.price,
+      stock: selectedAnimal!.stock,
+      image: selectedAnimal!.image,
+      isPopular: selectedAnimal!.isPopular,
+      title: selectedCategory!.title,
+      category_description: selectedCategory!.description,
     };
 
     if (!animalWithCategory) postAnimalWithCategory(newAnimalWithCategory);
