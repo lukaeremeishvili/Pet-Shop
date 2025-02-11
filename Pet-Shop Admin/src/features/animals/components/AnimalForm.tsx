@@ -118,7 +118,13 @@ function AnimalForm({ animalUuid }: IForm) {
       imageRef.current ? imageRef.current.value : ""
     );
 
-    if (nameErr || descriptionErr || priceErr || stockErr || imageErr)
+    if (
+      !nameRef.current ||
+      !descriptionRef.current ||
+      !priceRef.current ||
+      !stockRef.current ||
+      !imageRef.current
+    )
       return setErrors({
         name: nameErr,
         description: descriptionErr,
@@ -128,12 +134,12 @@ function AnimalForm({ animalUuid }: IForm) {
       });
 
     const newAnimal = {
-      name: nameRef.current!.value,
-      description: descriptionRef.current!.value,
-      price: +priceRef.current!.value,
+      name: nameRef.current.value,
+      description: descriptionRef.current.value,
+      price: +priceRef.current.value,
       isPopular: isPopular,
-      stock: +stockRef.current!.value,
-      image: imageRef.current!.value,
+      stock: +stockRef.current.value,
+      image: imageRef.current.value,
     };
 
     if (!animal) postAnimal(newAnimal);
@@ -154,27 +160,31 @@ function AnimalForm({ animalUuid }: IForm) {
           <Input
             name="name"
             inputRef={nameRef}
-            defaultValue={animal?.name || ""}
+            defaultValue={animalUuid ? (animal?.name ? animal.name : "") : ""}
             error={errors.name}
           />
           <Input
             name="price"
             type="number"
             inputRef={priceRef}
-            defaultValue={String(animal?.price || "")}
+            defaultValue={
+              animalUuid ? (animal?.price ? String(animal.price) : "") : ""
+            }
             error={errors.price}
           />
           <Input
             name="stock"
             type="number"
             inputRef={stockRef}
-            defaultValue={String(animal?.stock || "")}
+            defaultValue={
+              animalUuid ? (animal?.stock ? String(animal.stock) : "") : ""
+            }
             error={errors.stock}
           />
           <Input
             name="image"
             inputRef={imageRef}
-            defaultValue={String(animal?.image || "")}
+            defaultValue={animalUuid ? (animal?.image ? animal.image : "") : ""}
             error={errors.image}
           />
         </div>
@@ -182,13 +192,15 @@ function AnimalForm({ animalUuid }: IForm) {
         <div>
           <TextareaInput
             name="description"
-            defaultValue={animal?.description || ""}
+            defaultValue={
+              animalUuid ? (animal?.description ? animal.description : "") : ""
+            }
             textareaRef={descriptionRef}
             error={errors.description}
           />
           <CheckboxInput
             name="popular"
-            checked={isPopular}
+            checked={animalUuid ? isPopular : false}
             onChange={() => setIsPopular((prev) => !prev)}
           />
         </div>
