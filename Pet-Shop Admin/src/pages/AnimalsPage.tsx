@@ -71,7 +71,7 @@ const Button = styled.button`
   }
 `;
 
-const CoffeeList = styled.div`
+const AnimalList = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -96,8 +96,10 @@ const AnimalsPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { animalList,  loading, error } = useAppSelector(animalSelector);
-
-  useEffect(() => {
+console.log(animalList)
+ 
+useEffect(() => {
+    console.log(animalList)
     dispatch (getAnimalsRequest())
   }, [dispatch]);
 
@@ -115,10 +117,10 @@ const AnimalsPage: React.FC = () => {
   return (
     <PageContainer>
       <Container>
-        <CoffeeList>
+        <AnimalList>
           <Heading>Animals</Heading>
           <AddButton onClick={addAnimal}>Add Animal</AddButton>
-        </CoffeeList>
+        </AnimalList>
 
         <Table>
           <thead>
@@ -128,7 +130,6 @@ const AnimalsPage: React.FC = () => {
               <Th>Description</Th>
               <Th>Price</Th>
               <Th>Stock</Th>
-              <Th>Actions</Th>
             </tr>
           </thead>
           <tbody>

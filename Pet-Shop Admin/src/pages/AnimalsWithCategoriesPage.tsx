@@ -1,5 +1,12 @@
-function AnimalsWithCategoriesPage() {
-  return <div>AnimalsWithCategoriesPage</div>;
-}
+
+
+
+const AnimalsWithCategoriesPage = () => {
+ 
+
+  return ( 
+    <div>AnimalsWithCategoriesPage</div>
+  );
+};
 
 export default AnimalsWithCategoriesPage;
