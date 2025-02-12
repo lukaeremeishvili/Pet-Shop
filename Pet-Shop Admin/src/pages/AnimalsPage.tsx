@@ -80,9 +80,9 @@ const AnimalsPage = () => {
                 {animal.name}
               </TD>
               <td>{animal.description}</td>
-              <td>${animal.price}</td>
+              <td>{animal.price}₾</td>
               <td>{animal.stock}</td>
-              
+
               <td>
                 <button onClick={() => editAnimal(animal._uuid)}>Edit</button>
               </td>
