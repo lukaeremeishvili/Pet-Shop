@@ -122,7 +122,7 @@ const CategoriesPage = () => {
                     className="border p-4 rounded-lg shadow-lg flex flex-col items-center"
                   >
                     <img
-                      src={animal.image}
+                       src={`${new URL(`../assets/${animal.image}`, import.meta.url).href}`}
                       alt={animal.name}
                       className="w-full h-48 object-cover mb-4 rounded-md"
                     />

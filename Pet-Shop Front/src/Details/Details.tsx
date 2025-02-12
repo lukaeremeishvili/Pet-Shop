@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
-import { addToWishlist } from "../store/wishlistSlice"; 
+import { addToWishlist } from "../store/wishlistSlice";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -13,11 +13,16 @@ interface ProductDetails {
   _self_link: string;
   _user: string;
   _uuid: string;
-  description: string;
+  animal_description: string;
+  animal_uuid: string;
+  category_description: string;
+  category_uuid: string;
   image: string;
+  isPopular: boolean;
   name: string;
   price: number;
   stock: number;
+  title: string;
 }
 
 const Details = () => {
@@ -29,7 +34,7 @@ const Details = () => {
     const fetchProduct = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/animals/${id}`,
+          `${import.meta.env.VITE_API_URL}/animals-with-categories/${id}`,
           {
             headers: {
               Authorization: `Bearer ${import.meta.env.VITE_CRUDAPI_KEY}`,
@@ -55,7 +60,7 @@ const Details = () => {
           price: product.price,
           quantity: 1,
           stock: product.stock,
-          image: product.image, 
+          image: product.image,
         })
       );
       toast.success("Item added to cart");
@@ -70,7 +75,7 @@ const Details = () => {
           name: product.name,
           price: product.price,
           stock: product.stock,
-          image: product.image, 
+          image: product.image,
         })
       );
       toast.success("Item added to wishlist");
@@ -82,28 +87,30 @@ const Details = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
-      <div className="flex mb-4">
+    <div className="container mx-auto p-6">
+      <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <img
-          src={product.image}
+          src={new URL(`../assets/${product.image}`, import.meta.url).href}
           alt={product.name}
-          className="w-1/3 h-auto rounded-md"
+          className="w-full h-56 object-cover"
         />
-        <div className="ml-6 flex-1">
-          <p className="text-lg">{product.description}</p>
-          <p className="text-xl font-semibold mt-2">Price: ₾{product.price}</p>
-          <p className="mt-2">Stock: {product.stock}</p>
+        <div className="p-4">
+          <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
+          <p className="text-sm text-gray-600">{product.animal_description}</p>
+          <p className="text-lg font-semibold mt-4 text-blue-600">
+            ₾{product.price}
+          </p>
+          <p className="mt-2 text-red-500">Stock: {product.stock}</p>
           <div className="flex mt-4 space-x-4">
             <button
               onClick={handleAddToCart}
-              className="px-6 py-2 bg-green-500 text-white rounded-md"
+              className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
             >
               Add to Cart
             </button>
             <button
               onClick={handleAddToWishlist}
-              className="px-6 py-2 bg-yellow-500 text-white rounded-md"
+              className="px-6 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
             >
               Add to Wishlist
             </button>

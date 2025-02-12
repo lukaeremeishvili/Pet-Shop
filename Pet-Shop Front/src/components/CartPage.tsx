@@ -178,7 +178,7 @@ const CartPage = () => {
             >
               <div className="flex items-center">
                 <img
-                  src={item.image}
+                src={`${new URL(`../assets/${item.image}`, import.meta.url).href}`}
                   alt={item.name}
                   className="w-16 h-16 object-cover mr-4"
                 />
