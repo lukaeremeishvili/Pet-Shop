@@ -44,16 +44,16 @@ const Header = () => {
 
         <div className="icons flex gap-4">
           <NavLink
-            to="/cart"
-            className="hover:text-blue-600 hover:scale-110 transition-all duration-200"
-          >
-            <Icon icon="mdi:shopping-cart-outline" className="text-3xl" />
-          </NavLink>
-          <NavLink
             to="/wishlist"
             className="hover:text-red-600 hover:scale-110 transition-all duration-200"
           >
             <Icon icon="akar-icons:heart" className="text-3xl" />
+          </NavLink>
+          <NavLink
+            to="/cart"
+            className="hover:text-blue-600 hover:scale-110 transition-all duration-200"
+          >
+            <Icon icon="mdi:shopping-cart-outline" className="text-3xl" />
           </NavLink>
         </div>
       </div>

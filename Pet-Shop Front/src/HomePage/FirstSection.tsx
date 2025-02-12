@@ -55,6 +55,7 @@ const FirstSection: React.FC = () => {
         navigation={{ nextEl: ".custom-next", prevEl: ".custom-prev" }}
         modules={[Navigation]}
         className="mySwiper"
+        loop={true}
         initialSlide={activeIndex}
         onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
       >
