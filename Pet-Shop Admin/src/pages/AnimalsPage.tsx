@@ -65,11 +65,11 @@ const AnimalsPage = () => {
       <Table>
         <thead>
           <tr>
-            <th>Image</th>
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
             <th>Stock</th>
+            <th>Details</th>
           </tr>
         </thead>
         <tbody>
@@ -82,6 +82,7 @@ const AnimalsPage = () => {
               <td>{animal.description}</td>
               <td>${animal.price}</td>
               <td>{animal.stock}</td>
+              
               <td>
                 <button onClick={() => editAnimal(animal._uuid)}>Edit</button>
               </td>
