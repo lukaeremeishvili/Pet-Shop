@@ -1,156 +1,95 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAnimalsRequest } from "../features/animals/store/animal.thunks";
 import { animalSelector } from "../features/animals/store/animal.slice";
 import useAppSelector from "../hooks/useAppSelector";
 import useAppDispatch from "../hooks/useAppDispatch";
-import PageContainer from "../layouts/PageContainer";
 import styled from "styled-components";
 import { IAnimal } from "../interfaces/animal.interface";
 import Error from "../components/Error";
 import Spinner from "../components/Spinner";
-
+import Heading from "../components/Heading";
+import Table from "../components/Table";
 
 const Container = styled.div`
   position: absolute;
   width: calc(100% - 430px);
-  min-height: 80dvh;
+  height: 80dvh;
   padding: 16px;
   background: #ffffff;
-`;
+  overflow-y: scroll;
 
-const Heading = styled.h1`
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 20px;
-`;
+  &::-webkit-scrollbar {
+    width: 20px;
+  }
 
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 8px;
-`;
+  &::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    background-color: #598eda;
+    border-radius: 10px;
+    border: 1px solid #5151517e;
 
-const Th = styled.th`
-  padding: 12px;
-  text-align: left;
-  border: 1px solid #ffffff;
-  background-color: hsl(0, 0%, 100%);
-  color: black;
-  border-bottom: 2px solid #cccccc;
-  font-size: 20px;
-  font-weight: 500;
-  padding-left: 24px;
-  padding-right: 140px;
-`;
-
-const Td = styled.td`
-  padding: 12px;
-  text-align: left;
-  font-weight: 500;
-  border: 1px solid #ffffff;
-  padding-left: 24px;
-`;
-
-const TableImage = styled.img`
-  width: 50px;
-  height: auto;
-  border-radius: 50%;
-`;
-
-const Button = styled.button`
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 500;
-  background: none;
-  color: #598eda;
-  border: none;
-
-  &:hover {
-    color: #076fff;
+    &:hover {
+      background-color: #076fff;
+    }
   }
 `;
 
-const AnimalList = styled.div`
+const TD = styled.td`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  gap: 10px;
 `;
 
-const AddButton = styled.button`
-  padding: 10px 20px;
-  background-color: #1d69e4;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0062ff;
-  }
-`;
-
-const AnimalsPage: React.FC = () => {
+const AnimalsPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { animalList,  loading, error } = useAppSelector(animalSelector);
-console.log(animalList)
- 
-useEffect(() => {
-    console.log(animalList)
-    dispatch (getAnimalsRequest())
+  const { animalList, loading, error } = useAppSelector(animalSelector);
+
+  useEffect(() => {
+    dispatch(getAnimalsRequest());
   }, [dispatch]);
 
   const addAnimal = () => navigate("/animals/manage");
 
-  const editAnimal = (animalId: string) => navigate(`/animals/manage?id=${animalId}`);
+  const editAnimal = (animalId: string) =>
+    navigate(`/animals/manage?id=${animalId}`);
 
-  if (loading)  {
-    return <Spinner/>
-  }
-  if (error) {
-    return <Error text={error} />;
-  }
+  if (loading) return <Spinner />;
+  if (error) return <Error text={error} />;
 
   return (
-    <PageContainer>
-      <Container>
-        <AnimalList>
-          <Heading>Animals</Heading>
-          <AddButton onClick={addAnimal}>Add Animal</AddButton>
-        </AnimalList>
+    <Container>
+      <Heading title="animal" onAdd={addAnimal} />
 
-        <Table>
-          <thead>
-            <tr>
-              <Th>Image</Th>
-              <Th>Name</Th>
-              <Th>Description</Th>
-              <Th>Price</Th>
-              <Th>Stock</Th>
+      <Table>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          {animalList?.map((animal: IAnimal) => (
+            <tr key={animal._uuid}>
+              <TD>
+                <img src={`./src/assets/${animal.image}`} alt={animal.name} />
+                {animal.name}
+              </TD>
+              <td>{animal.description}</td>
+              <td>${animal.price}</td>
+              <td>{animal.stock}</td>
+              <td>
+                <button onClick={() => editAnimal(animal._uuid)}>Edit</button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {animalList?.map((animal: IAnimal) => (
-              <tr key={animal._uuid}>
-                <Td>
-                  <TableImage src={animal.image} alt={animal.name} />
-                </Td>
-                <Td>{animal.name}</Td> 
-                <Td>{animal.description}</Td>
-                <Td>${animal.price}</Td>
-                <Td>{animal.stock}</Td>
-                <Td>
-                  <Button onClick={() => editAnimal(animal._uuid)}>Edit</Button>
-                </Td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Container>
-    </PageContainer>
+          ))}
+        </tbody>
+      </Table>
+    </Container>
   );
 };
 
