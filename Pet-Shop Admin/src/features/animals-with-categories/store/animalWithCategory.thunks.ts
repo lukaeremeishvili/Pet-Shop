@@ -12,6 +12,7 @@ import { deleteItemRequest } from "../../../services/thunk/delete.item";
 export const getAnimalWithCategoryRequest = getItemRequest<IAnimalWithCategory>(
   "animal-with-category",
   `${BASE_URL}/${REQUEST.animal_with_category}`
+  
 );
 
 export const getAnimalsWithCategoryRequest =
