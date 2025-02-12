@@ -60,7 +60,7 @@ const AnimalsPage = () => {
 
   return (
     <Container>
-      <Heading title="animal" onAdd={addAnimal} />
+      <Heading title="animals" btnDescription="animal" onAdd={addAnimal} />
 
       <Table>
         <thead>
