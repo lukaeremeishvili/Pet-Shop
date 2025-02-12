@@ -60,6 +60,22 @@ const StyledContent = styled.div`
   box-shadow: 0 0.5rem 1rem #00000033;
   z-index: 1;
   overflow: hidden;
+  height: 300px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    background-color: #598fda62;
+    border-radius: 10px;
+    border: 1px solid #5151517e;
+
+    &:hover {
+      background-color: #598fdaa9;
+    }
+  }
 
   & div {
     cursor: pointer;
