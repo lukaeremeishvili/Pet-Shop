@@ -31,14 +31,15 @@ const StyledAddButton = styled.button`
 
 interface IHeading {
   title: string;
+  btnDescription: string;
   onAdd: () => void;
 }
 
-function Heading({ title, onAdd }: IHeading) {
+function Heading({ title, btnDescription, onAdd }: IHeading) {
   return (
     <StyledHeading>
-      <StyledTitle>{title}s</StyledTitle>
-      <StyledAddButton onClick={onAdd}>Add {title}</StyledAddButton>
+      <StyledTitle>{title}</StyledTitle>
+      <StyledAddButton onClick={onAdd}>Add {btnDescription}</StyledAddButton>
     </StyledHeading>
   );
 }

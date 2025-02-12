@@ -10,74 +10,33 @@ import { animalWithCategorySelector } from "../features/animals-with-categories/
 import { animalSelector } from "../features/animals/store/animal.slice";
 import { categorySelector } from "../features/categories/store/category.slice";
 import { IAnimalWithCategory } from "../interfaces/animalWithCategory.interface";
-import { IAnimal } from "../interfaces/animal.interface";
-import { ICategory } from "../interfaces/category.interface";
 import Spinner from "../components/Spinner";
 import Error from "../components/Error";
+import Heading from "../components/Heading";
+import Table from "../components/Table";
 
 const Container = styled.div`
   position: absolute;
   width: calc(100% - 430px);
-  min-height: 80dvh;
+  height: 80dvh;
   padding: 16px;
   background: #ffffff;
-`;
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 20px;
-`;
+  overflow-y: scroll;
 
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 8px;
-`;
-
-const Th = styled.th`
-  padding: 12px;
-  text-align: left;
-  border-bottom: 2px solid #cccccc;
-  font-size: 20px;
-  font-weight: 500;
-  padding-left: 24px;
-`;
-
-const Td = styled.td`
-  padding: 12px;
-  text-align: left;
-  font-weight: 500;
-  padding-left: 24px;
-  border-bottom: 1px solid #cccccc;
-`;
-
-const Button = styled.button`
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 500;
-  background: none;
-  color: #598eda;
-  border: none;
-
-  &:hover {
-    color: #076fff;
+  &::-webkit-scrollbar {
+    width: 20px;
   }
-`;
 
-const AddButton = styled.button`
-  padding: 12px 20px;
-  background-color: #1d69e4;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
+  &::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    background-color: #598eda;
+    border-radius: 10px;
+    border: 1px solid #5151517e;
 
-  &:hover {
-    background-color: #0062ff;
+    &:hover {
+      background-color: #076fff;
+    }
   }
 `;
 
@@ -125,22 +84,8 @@ const AnimalsWithCategoriesPage = () => {
     navigate(`/animals-with-categories/manage?id=${animalWithCategoryId}`);
   };
 
-  const getAnimalName = (animalUuid: string) => {
-    const animal = animalList.find((a: IAnimal) => a._uuid === animalUuid);
-    return animal ? animal.name : "Unknown Animal";
-  };
-
-  const getCategoryTitle = (categoryUuid: string) => {
-    const category = categoryList.find(
-      (c: ICategory) => c._uuid === categoryUuid
-    );
-    return category ? category.title : "Unknown Category";
-  };
-
-  if (animalWithCategoryLoading || animalLoading || categoryLoading) {
+  if (animalWithCategoryLoading || animalLoading || categoryLoading)
     return <Spinner />;
-  }
-
   if (animalWithCategoryError || animalError || categoryError) {
     const errorText =
       animalWithCategoryError ||
@@ -153,32 +98,33 @@ const AnimalsWithCategoriesPage = () => {
   return (
     <StyledAnimalsWithCategoriesPage>
       <Container>
-        <Header>
-          <h1>Animals With Categories</h1>
-          <AddButton onClick={handleAdd}>Add Animal With Category</AddButton>
-        </Header>
+        <Heading
+          title="animals with category"
+          btnDescription="animals with category"
+          onAdd={handleAdd}
+        />
 
         <Table>
           <thead>
             <tr>
-              <Th>Animal Name</Th>
-              <Th>Category Title</Th>
-              <Th>Edit</Th>
+              <th>Animal Name</th>
+              <th>Category Title</th>
+              <th>Edit</th>
             </tr>
           </thead>
           <tbody>
-            {animalWithCategoryList.map(
+            {animalWithCategoryList?.map(
               (animalWithCategory: IAnimalWithCategory) => (
                 <tr key={animalWithCategory._uuid}>
-                  <Td>{getAnimalName(animalWithCategory.animal_uuid)}</Td>
-                  <Td>{getCategoryTitle(animalWithCategory.category_uuid)}</Td>
-                  <Td>
-                    <Button
+                  <td>{animalWithCategory.name}</td>
+                  <td>{animalWithCategory.title}</td>
+                  <td>
+                    <button
                       onClick={() => handleEdit(animalWithCategory._uuid)}
                     >
                       Edit
-                    </Button>
-                  </Td>
+                    </button>
+                  </td>
                 </tr>
               )
             )}
