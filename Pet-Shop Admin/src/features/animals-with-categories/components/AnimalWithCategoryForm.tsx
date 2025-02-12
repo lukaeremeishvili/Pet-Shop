@@ -185,7 +185,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
         <SelectorInput
           name="animal"
           items={animalList}
-          selectedItem={animalWithCategoryUuid ? selectedAnimal : null}
+          selectedItem={selectedAnimal}
           onSelectItem={(selectedItem) =>
             setSelectedAnimal(selectedItem as IAnimal)
           }
@@ -194,7 +194,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
         <SelectorInput
           name="category"
           items={categoryList}
-          selectedItem={animalWithCategoryUuid ? selectedCategory : null}
+          selectedItem={selectedCategory}
           onSelectItem={(selectedItem) =>
             setSelectedCategory(selectedItem as ICategory)
           }
