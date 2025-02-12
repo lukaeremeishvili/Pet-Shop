@@ -89,15 +89,15 @@ function CategoryForm({ categoryUuid }: IForm) {
       descriptionRef.current ? descriptionRef.current.value : ""
     );
 
-    if (titleErr || descriptionErr)
+    if (!titleRef.current || !descriptionRef.current)
       return setErrors({
         title: titleErr,
         description: descriptionErr,
       });
 
     const newCategory = {
-      title: titleRef.current!.value,
-      description: descriptionRef.current!.value,
+      title: titleRef.current.value,
+      description: descriptionRef.current.value,
     };
 
     if (!category) postCategory(newCategory);
@@ -118,12 +118,12 @@ function CategoryForm({ categoryUuid }: IForm) {
           <Input
             name="title"
             inputRef={titleRef}
-            defaultValue={category?.title || ""}
+            defaultValue={categoryUuid ? category?.title || "" : ""}
             error={errors.title}
           />
           <TextareaInput
             name="description"
-            defaultValue={category?.description || ""}
+            defaultValue={categoryUuid ? category?.description || "" : ""}
             textareaRef={descriptionRef}
             error={errors.description}
           />

@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IGetAllResponse } from "../../interfaces/response.interface";
 
 const apiKey = import.meta.env.VITE_CRUDAPI_API_KEY as string;
-
 export const getAllItemRequest = <T extends object>(
   name: string,
   url: string

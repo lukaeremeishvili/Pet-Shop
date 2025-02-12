@@ -143,15 +143,23 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
     const animalErr = validateObject(selectedAnimal);
     const categoryErr = validateObject(selectedCategory);
 
-    if (animalErr || categoryErr)
+    if (!selectedAnimal || !selectedCategory)
       return setErrors({
         animal: animalErr,
         category: categoryErr,
       });
 
     const newAnimalWithCategory = {
-      animal_uuid: selectedAnimal!._uuid,
-      category_uuid: selectedCategory!._uuid,
+      animal_uuid: selectedAnimal._uuid,
+      category_uuid: selectedCategory._uuid,
+      name: selectedAnimal.name,
+      animal_description: selectedAnimal.description,
+      price: selectedAnimal.price,
+      stock: selectedAnimal.stock,
+      image: selectedAnimal.image,
+      isPopular: selectedAnimal.isPopular,
+      title: selectedCategory.title,
+      category_description: selectedCategory.description,
     };
 
     if (!animalWithCategory) postAnimalWithCategory(newAnimalWithCategory);
@@ -177,7 +185,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
         <SelectorInput
           name="animal"
           items={animalList}
-          selectedItem={selectedAnimal}
+          selectedItem={animalWithCategoryUuid ? selectedAnimal : null}
           onSelectItem={(selectedItem) =>
             setSelectedAnimal(selectedItem as IAnimal)
           }
@@ -186,7 +194,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
         <SelectorInput
           name="category"
           items={categoryList}
-          selectedItem={selectedCategory}
+          selectedItem={animalWithCategoryUuid ? selectedCategory : null}
           onSelectItem={(selectedItem) =>
             setSelectedCategory(selectedItem as ICategory)
           }

@@ -5,13 +5,13 @@ import useAppDispatch from "../hooks/useAppDispatch";
 import useAppSelector from "../hooks/useAppSelector";
 import { getAnimalsWithCategoryRequest } from "../features/animals-with-categories/store/animalWithCategory.thunks";
 import { getAnimalsRequest } from "../features/animals/store/animal.thunks";
-import { getCategoriesRequest } from "../features/categories/store/category.thunks"; 
+import { getCategoriesRequest } from "../features/categories/store/category.thunks";
 import { animalWithCategorySelector } from "../features/animals-with-categories/store/animalWithCategory.slice";
-import { animalSelector } from "../features/animals/store/animal.slice"; 
-import { categorySelector } from "../features/categories/store/category.slice"; 
+import { animalSelector } from "../features/animals/store/animal.slice";
+import { categorySelector } from "../features/categories/store/category.slice";
 import { IAnimalWithCategory } from "../interfaces/animalWithCategory.interface";
-import { IAnimal } from "../interfaces/animal.interface"; 
-import { ICategory } from "../interfaces/category.interface"; 
+import { IAnimal } from "../interfaces/animal.interface";
+import { ICategory } from "../interfaces/category.interface";
 import Spinner from "../components/Spinner";
 import Error from "../components/Error";
 
@@ -90,10 +90,22 @@ const StyledAnimalsWithCategoriesPage = styled.div`
 const AnimalsWithCategoriesPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  
-  const { animalWithCategoryList, loading: animalWithCategoryLoading, error: animalWithCategoryError } = useAppSelector(animalWithCategorySelector);
-  const { animalList, loading: animalLoading, error: animalError } = useAppSelector(animalSelector);
-  const { categoryList, loading: categoryLoading, error: categoryError } = useAppSelector(categorySelector);
+
+  const {
+    animalWithCategoryList,
+    loading: animalWithCategoryLoading,
+    error: animalWithCategoryError,
+  } = useAppSelector(animalWithCategorySelector);
+  const {
+    animalList,
+    loading: animalLoading,
+    error: animalError,
+  } = useAppSelector(animalSelector);
+  const {
+    categoryList,
+    loading: categoryLoading,
+    error: categoryError,
+  } = useAppSelector(categorySelector);
 
   useEffect(() => {
     if (!animalList.length) {
@@ -107,7 +119,6 @@ const AnimalsWithCategoriesPage = () => {
     }
   }, [dispatch, animalList, categoryList, animalWithCategoryList]);
 
-  
   const handleAdd = () => navigate("/animals-with-categories/manage");
 
   const handleEdit = (animalWithCategoryId: string) => {
@@ -120,7 +131,9 @@ const AnimalsWithCategoriesPage = () => {
   };
 
   const getCategoryTitle = (categoryUuid: string) => {
-    const category = categoryList.find((c: ICategory) => c._uuid === categoryUuid);
+    const category = categoryList.find(
+      (c: ICategory) => c._uuid === categoryUuid
+    );
     return category ? category.title : "Unknown Category";
   };
 
@@ -129,7 +142,11 @@ const AnimalsWithCategoriesPage = () => {
   }
 
   if (animalWithCategoryError || animalError || categoryError) {
-    const errorText = animalWithCategoryError || animalError || categoryError || "An unknown error occurred.";
+    const errorText =
+      animalWithCategoryError ||
+      animalError ||
+      categoryError ||
+      "An unknown error occurred.";
     return <Error text={errorText} />;
   }
 
@@ -150,15 +167,21 @@ const AnimalsWithCategoriesPage = () => {
             </tr>
           </thead>
           <tbody>
-            {animalWithCategoryList.map((animalWithCategory: IAnimalWithCategory) => (
-              <tr key={animalWithCategory._uuid}>
-                <Td>{getAnimalName(animalWithCategory.animal_uuid)}</Td>
-                <Td>{getCategoryTitle(animalWithCategory.category_uuid)}</Td>
-                <Td>
-                  <Button onClick={() => handleEdit(animalWithCategory._uuid)}>Edit</Button>
-                </Td>
-              </tr>
-            ))}
+            {animalWithCategoryList.map(
+              (animalWithCategory: IAnimalWithCategory) => (
+                <tr key={animalWithCategory._uuid}>
+                  <Td>{getAnimalName(animalWithCategory.animal_uuid)}</Td>
+                  <Td>{getCategoryTitle(animalWithCategory.category_uuid)}</Td>
+                  <Td>
+                    <Button
+                      onClick={() => handleEdit(animalWithCategory._uuid)}
+                    >
+                      Edit
+                    </Button>
+                  </Td>
+                </tr>
+              )
+            )}
           </tbody>
         </Table>
       </Container>
