@@ -21,7 +21,6 @@ const Container = styled.div`
   height: 80dvh;
   padding: 16px;
   background: #ffffff;
-
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
@@ -38,12 +37,6 @@ const Container = styled.div`
       background-color: #076fff;
     }
   }
-`;
-
-const StyledAnimalsWithCategoriesPage = styled.div`
-  width: 80%;
-  margin: 0 auto;
-  text-align: center;
 `;
 
 const AnimalsWithCategoriesPage = () => {
@@ -96,42 +89,38 @@ const AnimalsWithCategoriesPage = () => {
   }
 
   return (
-    <StyledAnimalsWithCategoriesPage>
-      <Container>
-        <Heading
-          title="animals with category"
-          btnDescription="animals with category"
-          onAdd={handleAdd}
-        />
+    <Container>
+      <Heading
+        title="animals with category"
+        btnDescription="animals with category"
+        onAdd={handleAdd}
+      />
 
-        <Table>
-          <thead>
-            <tr>
-              <th>Animal Name</th>
-              <th>Category Title</th>
-              <th>Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {animalWithCategoryList?.map(
-              (animalWithCategory: IAnimalWithCategory) => (
-                <tr key={animalWithCategory._uuid}>
-                  <td>{animalWithCategory.name}</td>
-                  <td>{animalWithCategory.title}</td>
-                  <td>
-                    <button
-                      onClick={() => handleEdit(animalWithCategory._uuid)}
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              )
-            )}
-          </tbody>
-        </Table>
-      </Container>
-    </StyledAnimalsWithCategoriesPage>
+      <Table>
+        <thead>
+          <tr>
+            <th>Animal Name</th>
+            <th>Category Title</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {animalWithCategoryList?.map(
+            (animalWithCategory: IAnimalWithCategory) => (
+              <tr key={animalWithCategory._uuid}>
+                <td>{animalWithCategory.name}</td>
+                <td>{animalWithCategory.title}</td>
+                <td>
+                  <button onClick={() => handleEdit(animalWithCategory._uuid)}>
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            )
+          )}
+        </tbody>
+      </Table>
+    </Container>
   );
 };
 
