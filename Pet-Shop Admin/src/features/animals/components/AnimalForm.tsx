@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Input from "../../../components/Input";
-import TextareaInput from "../../../components/TextareaInput";
+import Input from "../../../components/Form/Input";
+import TextareaInput from "../../../components/Form/TextareaInput";
 import validateText from "../../../validations/validateText";
 import validateNumber from "../../../validations/validateNumber";
 import validateTextarea from "../../../validations/validateTextaria";
@@ -16,7 +16,7 @@ import {
 } from "../store/animal.thunks";
 import { IAnimal, IBaseAnimal } from "../../../interfaces/animal.interface";
 import CheckboxInput from "./CheckboxInput";
-import Form from "../../../components/Form";
+import Form from "../../../components/Form/Form";
 import styled from "styled-components";
 import {
   loadingNotification,

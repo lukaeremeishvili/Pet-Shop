@@ -15,9 +15,9 @@ import {
 } from "../../../interfaces/category.interface";
 import validateText from "../../../validations/validateText";
 import validateTextarea from "../../../validations/validateTextaria";
-import Input from "../../../components/Input";
-import TextareaInput from "../../../components/TextareaInput";
-import Form from "../../../components/Form";
+import Input from "../../../components/Form/Input";
+import TextareaInput from "../../../components/Form/TextareaInput";
+import Form from "../../../components/Form/Form";
 import {
   loadingNotification,
   onResponseReturned,

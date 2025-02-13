@@ -1,4 +1,4 @@
-import "./keyframes.css";
+import "./Keyframes/keyframes.css";
 import styled from "styled-components";
 
 const StyledSpinner = styled.div`

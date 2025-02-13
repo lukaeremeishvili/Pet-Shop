@@ -13,7 +13,7 @@ import {
   IAnimalWithCategory,
   IBaseAnimalWithCategory,
 } from "../../../interfaces/animalWithCategory.interface";
-import Form from "../../../components/Form";
+import Form from "../../../components/Form/Form";
 import { animalSelector } from "../../animals/store/animal.slice";
 import { categorySelector } from "../../categories/store/category.slice";
 import { getAnimalsRequest } from "../../animals/store/animal.thunks";
