@@ -82,7 +82,12 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
   }, [dispatch, animalWithCategoryUuid]);
 
   useEffect(() => {
-    if (animalWithCategory && animalList.length && categoryList.length) {
+    if (
+      animalWithCategoryUuid &&
+      animalWithCategory &&
+      animalList.length &&
+      categoryList.length
+    ) {
       const foundAnimal = animalList.find(
         (animal) => animal._uuid === animalWithCategory.animal_uuid
       );
@@ -93,7 +98,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
       setSelectedAnimal(foundAnimal ?? null);
       setSelectedCategory(foundCategory ?? null);
     }
-  }, [animalWithCategory, animalList, categoryList]);
+  }, [animalWithCategoryUuid, animalWithCategory, animalList, categoryList]);
 
   const postAnimalWithCategory = async (
     AnimalWithCategory: IBaseAnimalWithCategory

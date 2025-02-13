@@ -62,8 +62,8 @@ function AnimalForm({ animalUuid }: IForm) {
   });
 
   useEffect(() => {
-    if (animal) setIsPopular(animal.isPopular);
-  }, [animal]);
+    if (animalUuid && animal) setIsPopular(animal.isPopular);
+  }, [animal, animalUuid]);
 
   useEffect(() => {
     if (animalUuid) dispatch(getAnimalRequest(animalUuid));
