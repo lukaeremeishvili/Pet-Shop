@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-// Minimal Styled Components
 const Container = styled.div`
   display: flex;
   flex-direction: column;

@@ -4,11 +4,7 @@ import styled from "styled-components";
 import useAppDispatch from "../hooks/useAppDispatch";
 import useAppSelector from "../hooks/useAppSelector";
 import { getAnimalsWithCategoryRequest } from "../features/animals-with-categories/store/animalWithCategory.thunks";
-import { getAnimalsRequest } from "../features/animals/store/animal.thunks";
-import { getCategoriesRequest } from "../features/categories/store/category.thunks";
 import { animalWithCategorySelector } from "../features/animals-with-categories/store/animalWithCategory.slice";
-import { animalSelector } from "../features/animals/store/animal.slice";
-import { categorySelector } from "../features/categories/store/category.slice";
 import { IAnimalWithCategory } from "../interfaces/animalWithCategory.interface";
 import Spinner from "../components/Spinner";
 import Error from "../components/Error";
@@ -48,28 +44,10 @@ const AnimalsWithCategoriesPage = () => {
     loading: animalWithCategoryLoading,
     error: animalWithCategoryError,
   } = useAppSelector(animalWithCategorySelector);
-  const {
-    animalList,
-    loading: animalLoading,
-    error: animalError,
-  } = useAppSelector(animalSelector);
-  const {
-    categoryList,
-    loading: categoryLoading,
-    error: categoryError,
-  } = useAppSelector(categorySelector);
 
   useEffect(() => {
-    if (!animalList.length) {
-      dispatch(getAnimalsRequest());
-    }
-    if (!categoryList.length) {
-      dispatch(getCategoriesRequest());
-    }
-    if (!animalWithCategoryList.length) {
-      dispatch(getAnimalsWithCategoryRequest());
-    }
-  }, [dispatch, animalList, categoryList, animalWithCategoryList]);
+    dispatch(getAnimalsWithCategoryRequest());
+  }, [dispatch]);
 
   const handleAdd = () => navigate("/animals-with-categories/manage");
 
@@ -77,14 +55,9 @@ const AnimalsWithCategoriesPage = () => {
     navigate(`/animals-with-categories/manage?id=${animalWithCategoryId}`);
   };
 
-  if (animalWithCategoryLoading || animalLoading || categoryLoading)
-    return <Spinner />;
-  if (animalWithCategoryError || animalError || categoryError) {
-    const errorText =
-      animalWithCategoryError ||
-      animalError ||
-      categoryError ||
-      "An unknown error occurred.";
+  if (animalWithCategoryLoading) return <Spinner />;
+  if (animalWithCategoryError) {
+    const errorText = animalWithCategoryError || "An unknown error occurred.";
     return <Error text={errorText} />;
   }
 

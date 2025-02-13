@@ -47,8 +47,8 @@ const AnimalsPage = () => {
   const { animalList, loading, error } = useAppSelector(animalSelector);
 
   useEffect(() => {
-    if (!animalList.length) dispatch(getAnimalsRequest());
-  }, [dispatch, animalList]);
+    dispatch(getAnimalsRequest());
+  }, [dispatch]);
 
   const addAnimal = () => navigate("/animals/manage");
 

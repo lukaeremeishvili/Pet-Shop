@@ -40,8 +40,8 @@ const CategoriesPage = () => {
   const { categoryList, loading, error } = useAppSelector(categorySelector);
 
   useEffect(() => {
-    if (!categoryList.length) dispatch(getCategoriesRequest());
-  }, [dispatch, categoryList]);
+    dispatch(getCategoriesRequest());
+  }, [dispatch]);
 
   const addCategory = () => navigate("/categories/manage");
   const editCategory = (uuid: string) =>
