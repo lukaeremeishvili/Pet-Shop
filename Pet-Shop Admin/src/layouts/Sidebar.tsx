@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { PAGE } from "../pages/pageConig";
 
 const StyledSidebar = styled.aside`
   display: flex;
@@ -41,13 +42,13 @@ const Sidebar = () => {
       <nav>
         <ul>
           <li>
-            <NavLink to="/animals">Animals</NavLink>
+            <NavLink to={PAGE.animal}>Animals</NavLink>
           </li>
           <li>
-            <NavLink to="/categories">Categories</NavLink>
+            <NavLink to={PAGE.category}>Categories</NavLink>
           </li>
           <li>
-            <NavLink to="/animals-with-categories">
+            <NavLink to={PAGE.animal_with_category}>
               Animals With Category
             </NavLink>
           </li>

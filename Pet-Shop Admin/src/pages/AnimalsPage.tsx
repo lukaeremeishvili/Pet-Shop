@@ -10,6 +10,7 @@ import Error from "../components/Error";
 import Spinner from "../components/Spinner";
 import Heading from "../components/Heading";
 import Table from "../components/Table";
+import { PAGE } from "./pageConig";
 
 const Container = styled.div`
   position: absolute;
@@ -47,13 +48,13 @@ const AnimalsPage = () => {
   const { animalList, loading, error } = useAppSelector(animalSelector);
 
   useEffect(() => {
-    if (!animalList.length) dispatch(getAnimalsRequest());
-  }, [dispatch, animalList]);
+    dispatch(getAnimalsRequest());
+  }, [dispatch]);
 
-  const addAnimal = () => navigate("/animals/manage");
+  const addAnimal = () => navigate(PAGE.animal_manage);
 
   const editAnimal = (animalId: string) =>
-    navigate(`/animals/manage?id=${animalId}`);
+    navigate(`${PAGE.animal_manage}?id=${animalId}`);
 
   if (loading) return <Spinner />;
   if (error) return <Error text={error} />;

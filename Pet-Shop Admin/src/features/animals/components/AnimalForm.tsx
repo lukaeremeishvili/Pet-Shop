@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Input from "../../../components/Input";
-import TextareaInput from "../../../components/TextareaInput";
+import Input from "../../../components/Form/Input";
+import TextareaInput from "../../../components/Form/TextareaInput";
 import validateText from "../../../validations/validateText";
 import validateNumber from "../../../validations/validateNumber";
 import validateTextarea from "../../../validations/validateTextaria";
@@ -16,12 +16,13 @@ import {
 } from "../store/animal.thunks";
 import { IAnimal, IBaseAnimal } from "../../../interfaces/animal.interface";
 import CheckboxInput from "./CheckboxInput";
-import Form from "../../../components/Form";
+import Form from "../../../components/Form/Form";
 import styled from "styled-components";
 import {
   loadingNotification,
   onResponseReturned,
 } from "../../../utils/notifications";
+import { PAGE } from "../../../pages/pageConig";
 
 const FormInputs = styled.div`
   &:first-child {
@@ -61,8 +62,8 @@ function AnimalForm({ animalUuid }: IForm) {
   });
 
   useEffect(() => {
-    if (animal) setIsPopular(animal.isPopular);
-  }, [animal]);
+    if (animalUuid && animal) setIsPopular(animal.isPopular);
+  }, [animal, animalUuid]);
 
   useEffect(() => {
     if (animalUuid) dispatch(getAnimalRequest(animalUuid));
@@ -74,7 +75,7 @@ function AnimalForm({ animalUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals"),
+      () => navigate(PAGE.animal),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -85,7 +86,7 @@ function AnimalForm({ animalUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals"),
+      () => navigate(PAGE.animal),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -96,7 +97,7 @@ function AnimalForm({ animalUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals"),
+      () => navigate(PAGE.animal),
       typeof res.payload === "string" ? res.payload : null
     );
   };

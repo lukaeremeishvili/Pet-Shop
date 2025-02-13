@@ -15,13 +15,14 @@ import {
 } from "../../../interfaces/category.interface";
 import validateText from "../../../validations/validateText";
 import validateTextarea from "../../../validations/validateTextaria";
-import Input from "../../../components/Input";
-import TextareaInput from "../../../components/TextareaInput";
-import Form from "../../../components/Form";
+import Input from "../../../components/Form/Input";
+import TextareaInput from "../../../components/Form/TextareaInput";
+import Form from "../../../components/Form/Form";
 import {
   loadingNotification,
   onResponseReturned,
 } from "../../../utils/notifications";
+import { PAGE } from "../../../pages/pageConig";
 
 interface IForm {
   categoryUuid: string | null;
@@ -52,7 +53,7 @@ function CategoryForm({ categoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/categories"),
+      () => navigate(PAGE.category),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -63,7 +64,7 @@ function CategoryForm({ categoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/categories"),
+      () => navigate(PAGE.category),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -74,7 +75,7 @@ function CategoryForm({ categoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/categories"),
+      () => navigate(PAGE.category),
       typeof res.payload === "string" ? res.payload : null
     );
   };

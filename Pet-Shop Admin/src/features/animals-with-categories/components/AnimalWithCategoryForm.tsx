@@ -13,7 +13,7 @@ import {
   IAnimalWithCategory,
   IBaseAnimalWithCategory,
 } from "../../../interfaces/animalWithCategory.interface";
-import Form from "../../../components/Form";
+import Form from "../../../components/Form/Form";
 import { animalSelector } from "../../animals/store/animal.slice";
 import { categorySelector } from "../../categories/store/category.slice";
 import { getAnimalsRequest } from "../../animals/store/animal.thunks";
@@ -27,6 +27,7 @@ import {
   loadingNotification,
   onResponseReturned,
 } from "../../../utils/notifications";
+import { PAGE } from "../../../pages/pageConig";
 
 const SyledSelectors = styled.div`
   display: flex;
@@ -81,7 +82,12 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
   }, [dispatch, animalWithCategoryUuid]);
 
   useEffect(() => {
-    if (animalWithCategory && animalList.length && categoryList.length) {
+    if (
+      animalWithCategoryUuid &&
+      animalWithCategory &&
+      animalList.length &&
+      categoryList.length
+    ) {
       const foundAnimal = animalList.find(
         (animal) => animal._uuid === animalWithCategory.animal_uuid
       );
@@ -92,7 +98,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
       setSelectedAnimal(foundAnimal ?? null);
       setSelectedCategory(foundCategory ?? null);
     }
-  }, [animalWithCategory, animalList, categoryList]);
+  }, [animalWithCategoryUuid, animalWithCategory, animalList, categoryList]);
 
   const postAnimalWithCategory = async (
     AnimalWithCategory: IBaseAnimalWithCategory
@@ -104,7 +110,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals-with-categories"),
+      () => navigate(PAGE.animal_with_category),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -119,7 +125,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals-with-categories"),
+      () => navigate(PAGE.animal_with_category),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -132,7 +138,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals-with-categories"),
+      () => navigate(PAGE.animal_with_category),
       typeof res.payload === "string" ? res.payload : null
     );
   };

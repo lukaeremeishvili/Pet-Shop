@@ -13,6 +13,7 @@ import AnimalsWithCategoriesManagePage from "./pages/AnimalsWithCategoriesManage
 import { ToastContainer } from "react-toastify";
 import ErrorPage from "./pages/ErrorPage";
 import styled from "styled-components";
+import { PAGE } from "./pages/pageConig";
 
 const StyledApp = styled.div`
   display: flex;
@@ -25,20 +26,23 @@ function App() {
         <Sidebar />
         <PageContainer>
           <Routes>
-            <Route path="/" element={<Navigate to="/animals" replace />} />
-            <Route path="/animals" element={<AnimalsPage />} />
-            <Route path="/animals/manage" element={<AnimalsManagePage />} />
-            <Route path="/categories" element={<CategoriesPage />} />
             <Route
-              path="/categories/manage"
+              path={PAGE.base}
+              element={<Navigate to={PAGE.animal} replace />}
+            />
+            <Route path={PAGE.animal} element={<AnimalsPage />} />
+            <Route path={PAGE.animal_manage} element={<AnimalsManagePage />} />
+            <Route path={PAGE.category} element={<CategoriesPage />} />
+            <Route
+              path={PAGE.category_manage}
               element={<CategoriesManagePage />}
             />
             <Route
-              path="/animals-with-categories"
+              path={PAGE.animal_with_category}
               element={<AnimalsWithCategoriesPage />}
             />
             <Route
-              path="/animals-with-categories/manage"
+              path={PAGE.animal_with_category_manage}
               element={<AnimalsWithCategoriesManagePage />}
             />
             <Route path="*" element={<ErrorPage />} />

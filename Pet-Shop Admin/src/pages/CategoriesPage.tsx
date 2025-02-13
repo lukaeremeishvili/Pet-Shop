@@ -10,6 +10,7 @@ import styled from "styled-components";
 import Table from "../components/Table";
 import Heading from "../components/Heading";
 import { ICategory } from "../interfaces/category.interface";
+import { PAGE } from "./pageConig";
 
 const Container = styled.div`
   position: absolute;
@@ -40,12 +41,12 @@ const CategoriesPage = () => {
   const { categoryList, loading, error } = useAppSelector(categorySelector);
 
   useEffect(() => {
-    if (!categoryList.length) dispatch(getCategoriesRequest());
-  }, [dispatch, categoryList]);
+    dispatch(getCategoriesRequest());
+  }, [dispatch]);
 
-  const addCategory = () => navigate("/categories/manage");
+  const addCategory = () => navigate(PAGE.category_manage);
   const editCategory = (uuid: string) =>
-    navigate(`/categories/manage?id=${uuid}`);
+    navigate(`${PAGE.category_manage}?id=${uuid}`);
 
   if (loading) return <Spinner />;
   if (error) return <Error text={error} />;

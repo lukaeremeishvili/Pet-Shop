@@ -1,7 +1,7 @@
 import { FormEvent, ReactNode } from "react";
 import styled from "styled-components";
 import Control from "./Control";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 
 const StyledForm = styled.form`
   min-height: 80dvh;
