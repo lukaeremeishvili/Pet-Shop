@@ -22,6 +22,7 @@ import {
   loadingNotification,
   onResponseReturned,
 } from "../../../utils/notifications";
+import { PAGE } from "../../../pages/pageConig";
 
 const FormInputs = styled.div`
   &:first-child {
@@ -74,7 +75,7 @@ function AnimalForm({ animalUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals"),
+      () => navigate(PAGE.animal),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -85,7 +86,7 @@ function AnimalForm({ animalUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals"),
+      () => navigate(PAGE.animal),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -96,7 +97,7 @@ function AnimalForm({ animalUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals"),
+      () => navigate(PAGE.animal),
       typeof res.payload === "string" ? res.payload : null
     );
   };

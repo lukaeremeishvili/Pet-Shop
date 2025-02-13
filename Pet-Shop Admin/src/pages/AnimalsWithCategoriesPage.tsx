@@ -10,6 +10,7 @@ import Spinner from "../components/Spinner";
 import Error from "../components/Error";
 import Heading from "../components/Heading";
 import Table from "../components/Table";
+import { PAGE } from "./pageConig";
 
 const Container = styled.div`
   position: absolute;
@@ -49,10 +50,10 @@ const AnimalsWithCategoriesPage = () => {
     dispatch(getAnimalsWithCategoryRequest());
   }, [dispatch]);
 
-  const handleAdd = () => navigate("/animals-with-categories/manage");
+  const handleAdd = () => navigate(PAGE.animal_with_category_manage);
 
   const handleEdit = (animalWithCategoryId: string) => {
-    navigate(`/animals-with-categories/manage?id=${animalWithCategoryId}`);
+    navigate(`${PAGE.animal_with_category_manage}?id=${animalWithCategoryId}`);
   };
 
   if (animalWithCategoryLoading) return <Spinner />;

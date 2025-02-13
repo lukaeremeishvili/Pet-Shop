@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { PAGE } from "./pageConig";
 
 const Container = styled.div`
   display: flex;
@@ -31,8 +32,8 @@ const Button = styled.button`
 
 const ErrorPage: React.FC = () => {
   const navigate = useNavigate();
-  
-  const goHome = () => navigate("/");
+
+  const goHome = () => navigate(PAGE.base);
 
   return (
     <Container>

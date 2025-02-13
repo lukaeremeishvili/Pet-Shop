@@ -27,6 +27,7 @@ import {
   loadingNotification,
   onResponseReturned,
 } from "../../../utils/notifications";
+import { PAGE } from "../../../pages/pageConig";
 
 const SyledSelectors = styled.div`
   display: flex;
@@ -104,7 +105,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals-with-categories"),
+      () => navigate(PAGE.animal_with_category),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -119,7 +120,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals-with-categories"),
+      () => navigate(PAGE.animal_with_category),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -132,7 +133,7 @@ function AnimalWithCategoryForm({ animalWithCategoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/animals-with-categories"),
+      () => navigate(PAGE.animal_with_category),
       typeof res.payload === "string" ? res.payload : null
     );
   };

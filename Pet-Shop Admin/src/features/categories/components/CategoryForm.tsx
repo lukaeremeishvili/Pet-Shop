@@ -22,6 +22,7 @@ import {
   loadingNotification,
   onResponseReturned,
 } from "../../../utils/notifications";
+import { PAGE } from "../../../pages/pageConig";
 
 interface IForm {
   categoryUuid: string | null;
@@ -52,7 +53,7 @@ function CategoryForm({ categoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/categories"),
+      () => navigate(PAGE.category),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -63,7 +64,7 @@ function CategoryForm({ categoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/categories"),
+      () => navigate(PAGE.category),
       typeof res.payload === "string" ? res.payload : null
     );
   };
@@ -74,7 +75,7 @@ function CategoryForm({ categoryUuid }: IForm) {
 
     onResponseReturned(
       loadingToastId,
-      () => navigate("/categories"),
+      () => navigate(PAGE.category),
       typeof res.payload === "string" ? res.payload : null
     );
   };
