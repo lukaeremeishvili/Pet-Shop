@@ -197,7 +197,7 @@ const WishlistPage = () => {
               </div>
             </div>
           ))}
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-left mt-4">
             <button
               onClick={handleClearWishlist}
               className="px-4 py-2 bg-red-500 text-white rounded-md"

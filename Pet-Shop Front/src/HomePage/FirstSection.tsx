@@ -104,7 +104,7 @@ const FirstSection: React.FC = () => {
                   {dog.animal_description}
                 </p>
                 <Link
-                  to={`/details/${dog._uuid}`}
+                  to={`/details/${dog._uuid}/category`}
                   className="py-[9px] px-[24px] bg-[#E58608] font-montserrat font-medium text-[18.66px] text-[#FFFF] rounded-[20px]"
                 >
                   Read More
