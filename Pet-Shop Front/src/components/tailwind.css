@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import "tailwindcss";
+
+
+@layer components {
+  .header {
+    @apply bg-[#FFF0D9] py-4;
+  }
+
+  .header .logo {
+    @apply flex items-center space-x-2;
+  }
+
+  .header .logo h3 {
+    @apply text-xl font-bold;
+  }
+
+  .header .navbar {
+    @apply flex space-x-6;
+  }
+
+  .header .navbar a {
+    @apply text-lg hover:text-gray-600;
+  }
+
+  .header .icons {
+    @apply flex space-x-4;
+  }
+
+  .header .icons a {
+    @apply text-2xl;
+  }
+}
