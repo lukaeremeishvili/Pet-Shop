@@ -201,13 +201,7 @@ function AnimalForm({ animalUuid }: IForm) {
           />
           <CheckboxInput
             name="popular"
-            checked={
-              animalUuid
-                ? animal?.isPopular
-                  ? animal.isPopular
-                  : false
-                : isPopular
-            }
+            checked={isPopular}
             onChange={() => setIsPopular((prev) => !prev)}
           />
         </div>
