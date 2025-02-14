@@ -1,59 +1,30 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../store/cartSlice";
-import { addToWishlist } from "../store/wishlistSlice";
+import { addToCart } from "../../store/cartSlice";
+import { addToWishlist } from "../../store/wishlistSlice";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-
-interface Animal {
-  _uuid: string;
-  name: string;
-  price: number;
-  image: string;
-  stock: number;
-  description: string;
-  title: string;
-}
-
-interface CategoryData {
-  category: string;
-  animals: Animal[];
-}
+import useFetch from "../../hooks/useFetch";
+import { IAnimalWithCategory } from "../../interfaces/animalWithCategory.interface";
 
 const CategoriesPage = () => {
-  const [animals, setAnimals] = useState<Animal[]>([]);
-  const [categories, setCategories] = useState<CategoryData[]>([]);
+  const {
+    data: animals,
+    loading,
+    error,
+  } = useFetch<IAnimalWithCategory[]>(
+    `${import.meta.env.VITE_API_URL}/animals-with-categories`,
+    "GET",
+    []
+  );
+  const [categories, setCategories] = useState<
+    { category: string; animals: IAnimalWithCategory[] }[]
+  >([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchAnimals = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/animals-with-categories`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_CRUDAPI_KEY}`,
-            },
-          }
-        );
-        const data = await response.json();
-
-        if (Array.isArray(data.items) && data.items.length > 0) {
-          setAnimals(data.items);
-        } else {
-          toast.error("No animals found.");
-        }
-      } catch {
-        toast.error("Failed to fetch animals");
-      }
-    };
-
-    fetchAnimals();
-  }, []);
-
-  useEffect(() => {
     if (animals.length > 0) {
-      const categories: { [key: string]: Animal[] } = {};
+      const categories: { [key: string]: IAnimalWithCategory[] } = {};
       animals.forEach((animal) => {
         const { title } = animal;
         if (title) {
@@ -73,7 +44,7 @@ const CategoriesPage = () => {
     }
   }, [animals]);
 
-  const handleAddToWishlist = (animal: Animal) => {
+  const handleAddToWishlist = (animal: IAnimalWithCategory) => {
     dispatch(
       addToWishlist({
         id: animal._uuid,
@@ -86,7 +57,7 @@ const CategoriesPage = () => {
     toast.success("Added to wishlist");
   };
 
-  const handleAddToCart = (animal: Animal) => {
+  const handleAddToCart = (animal: IAnimalWithCategory) => {
     dispatch(
       addToCart({
         id: animal._uuid,
@@ -101,13 +72,15 @@ const CategoriesPage = () => {
     toast.success("Added to cart");
   };
 
+  if (error) return <div>{error}</div>;
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-extralight mb-4 text-center">
         Animals by Categories
       </h1>
 
-      {categories.length === 0 ? (
+      {loading ? (
         <p>Loading animals...</p>
       ) : (
         categories.map((categoryData) => (
@@ -123,7 +96,7 @@ const CategoriesPage = () => {
                     className="border p-4 rounded-lg shadow-lg flex flex-col items-center"
                   >
                     <img
-                       src={`${new URL(`../assets/${animal.image}`, import.meta.url).href}`}
+                      src={`./src/assets/${animal.image}`}
                       alt={animal.name}
                       className="w-full h-48 object-cover mb-4 rounded-md"
                     />
@@ -145,7 +118,7 @@ const CategoriesPage = () => {
                         Add to Wishlist
                       </button>
                       <Link
-                        to={`/details/${animal._uuid}/category`}
+                        to={`/details/${animal._uuid}`}
                         className="px-4 py-2 bg-blue-500 text-white rounded-md"
                       >
                         See Details

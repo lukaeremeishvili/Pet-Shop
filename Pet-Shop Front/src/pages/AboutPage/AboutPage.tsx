@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../store/cartSlice";
-import { addToWishlist } from "../store/wishlistSlice";
+import { addToCart } from "../../store/cartSlice";
+import { addToWishlist } from "../../store/wishlistSlice";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
+import { IAnimalWithCategory } from "../../interfaces/animalWithCategory.interface";
 
 interface Animal {
   _uuid: string;
@@ -14,34 +15,16 @@ interface Animal {
 }
 
 const AboutPage = () => {
-  const [animals, setAnimals] = useState<Animal[]>([]);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchAnimals = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/animals`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_CRUDAPI_KEY}`,
-            },
-          }
-        );
-        const data = await response.json();
-
-        if (Array.isArray(data.items) && data.items.length > 0) {
-          setAnimals(data.items);
-        } else {
-          toast.error("No animals found.");
-        }
-      } catch {
-        toast.error("Failed to fetch animals");
-      }
-    };
-
-    fetchAnimals();
-  }, []);
+  const {
+    data: animals,
+    loading,
+    error,
+  } = useFetch<IAnimalWithCategory[]>(
+    `${import.meta.env.VITE_API_URL}/animals-with-categories`,
+    "GET",
+    []
+  );
 
   const handleAddToWishlist = (animal: Animal) => {
     dispatch(
@@ -65,17 +48,18 @@ const AboutPage = () => {
         quantity: 1,
         stock: animal.stock,
         image: animal.image,
-        type: "animals",
+        type: "animals-with-categories",
       })
     );
     toast.success("Added to cart");
   };
 
+  if (error) return <div>{error}</div>;
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-extralight mb-4 text-center">All Animals</h1>
 
-      {animals.length === 0 ? (
+      {loading ? (
         <p>Loading animals...</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -85,7 +69,7 @@ const AboutPage = () => {
               className="border p-4 rounded-lg shadow-lg flex flex-col items-center"
             >
               <img
-                src={`${new URL(`../assets/${animal.image}`, import.meta.url).href}`}
+                src={`./src/assets/${animal.image}`}
                 alt={animal.name}
                 className="w-full h-48 object-cover mb-4 rounded-md"
               />

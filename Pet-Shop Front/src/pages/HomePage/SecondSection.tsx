@@ -1,49 +1,12 @@
-import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard, Scrollbar, Navigation, Pagination } from "swiper/modules";
+import { IAnimalWithCategory } from "../../interfaces/animalWithCategory.interface";
 
-interface Animal {
-  _uuid: string;
-  image: string;
-  name: string;
-  animal_description: string;
-  isPopular: boolean;
-}
-interface ApiResponse {
-  items: Animal[];
-}
-const SecondSection: React.FC = () => {
-  const [popularAnimals, setPopularAnimals] = useState<Animal[]>([]);
-
-  useEffect(() => {
-    const fetchPopularAnimals = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/animals-with-categories`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${import.meta.env.VITE_CRUDAPI_KEY}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch popular animals");
-        }
-
-        const data: ApiResponse = await response.json();
-        const filteredAnimals = data.items.filter((animal) => animal.isPopular);
-
-        setPopularAnimals(filteredAnimals);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchPopularAnimals();
-  }, []);
-
+const SecondSection = ({
+  popularAnimals,
+}: {
+  popularAnimals: IAnimalWithCategory[];
+}) => {
   return (
     <section className="section2 mb-16">
       <h1 className="text-3xl font-semibold text-black leading-[54px] tracking-[0%] text-center">
@@ -69,10 +32,7 @@ const SecondSection: React.FC = () => {
             className="mySwiper"
           >
             {popularAnimals.map((animal) => {
-              const imageUrl = new URL(
-                `../assets/${animal.image}`,
-                import.meta.url
-              ).href;
+              const imageUrl = `./src/assets/${animal.image}`;
 
               return (
                 <SwiperSlide className="pb-5" key={animal._uuid}>

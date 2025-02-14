@@ -99,12 +99,7 @@ const CartPage = () => {
       const updateStockPromises = cartItems.map(async (item) => {
         const newStock = item.stock - item.quantity;
         if (newStock >= 0) {
-          let endpoint: string;
-          if (item.type === "animals-with-categories") {
-            endpoint = `${apiUrl}/animals-with-categories/${item.id}`;
-          } else {
-            endpoint = `${apiUrl}/animals/${item.id}`;
-          }
+          const endpoint = `${apiUrl}/animals-with-categories/${item.id}`;
 
           const response = await fetch(endpoint, {
             method: "PUT",
@@ -138,12 +133,7 @@ const CartPage = () => {
       const apiUrl = import.meta.env.VITE_API_URL;
       const newStock = item.stock - item.quantity;
       if (newStock >= 0) {
-        let endpoint: string;
-        if (item.type === "animals-with-categories") {
-          endpoint = `${apiUrl}/animals-with-categories/${item.id}`;
-        } else {
-          endpoint = `${apiUrl}/animals/${item.id}`;
-        }
+        const endpoint = `${apiUrl}/animals-with-categories/${item.id}`;
 
         const response = await fetch(endpoint, {
           method: "PUT",
