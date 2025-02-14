@@ -95,6 +95,7 @@ const CategoriesPage = () => {
         quantity: 1,
         stock: animal.stock,
         image: animal.image,
+        type: "animals-with-categories",
       })
     );
     toast.success("Added to cart");
@@ -144,7 +145,7 @@ const CategoriesPage = () => {
                         Add to Wishlist
                       </button>
                       <Link
-                        to={`/details/${animal._uuid}`}
+                        to={`/details/${animal._uuid}/category`}
                         className="px-4 py-2 bg-blue-500 text-white rounded-md"
                       >
                         See Details

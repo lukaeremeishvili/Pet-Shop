@@ -11,6 +11,8 @@ interface CartItem {
   quantity: number;
   stock: number;
   image: string;
+  type?: "animals" | "animals-with-categories";
+  category_uuid?: string;
 }
 
 const CartPage = () => {
@@ -97,17 +99,21 @@ const CartPage = () => {
       const updateStockPromises = cartItems.map(async (item) => {
         const newStock = item.stock - item.quantity;
         if (newStock >= 0) {
-          const response = await fetch(
-            `${apiUrl}/animals-with-categories/${item.id}`,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${apiKey}`,
-              },
-              body: JSON.stringify({ stock: newStock }),
-            }
-          );
+          let endpoint: string;
+          if (item.type === "animals-with-categories") {
+            endpoint = `${apiUrl}/animals-with-categories/${item.id}`;
+          } else {
+            endpoint = `${apiUrl}/animals/${item.id}`;
+          }
+
+          const response = await fetch(endpoint, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({ stock: newStock }),
+          });
 
           if (!response.ok) {
             const errorText = await response.text();
@@ -119,13 +125,55 @@ const CartPage = () => {
       });
 
       await Promise.all(updateStockPromises);
-
       dispatch(clearCart());
       toast.success("Checkout successful! Stock updated and cart cleared.");
     } catch (error) {
       toast.error("Checkout failed. Please try again.");
       console.error(error);
     }
+  };
+  const handleBuyItem = async (item: CartItem) => {
+    try {
+      const apiKey = import.meta.env.VITE_CRUDAPI_KEY;
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const newStock = item.stock - item.quantity;
+      if (newStock >= 0) {
+        let endpoint: string;
+        if (item.type === "animals-with-categories") {
+          endpoint = `${apiUrl}/animals-with-categories/${item.id}`;
+        } else {
+          endpoint = `${apiUrl}/animals/${item.id}`;
+        }
+
+        const response = await fetch(endpoint, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({ stock: newStock }),
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(
+            `Failed to update stock for ${item.name}: ${errorText}`
+          );
+        }
+        dispatch(removeFromCart(item.id));
+        toast.success(`Purchased ${item.name}`);
+      } else {
+        toast.error(`Not enough stock for ${item.name}`);
+      }
+    } catch (error) {
+      toast.error("Purchase failed. Please try again.");
+      console.error(error);
+    }
+  };
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+    toast.success("Cart cleared");
   };
 
   const toggleCurrencyForItem = async (
@@ -178,7 +226,9 @@ const CartPage = () => {
             >
               <div className="flex items-center">
                 <img
-                src={`${new URL(`../assets/${item.image}`, import.meta.url).href}`}
+                  src={`${
+                    new URL(`../assets/${item.image}`, import.meta.url).href
+                  }`}
                   alt={item.name}
                   className="w-16 h-16 object-cover mr-4"
                 />
@@ -233,15 +283,28 @@ const CartPage = () => {
                     ? "Convert to GEL"
                     : "Convert to USD"}
                 </button>
+                {/* New individual Buy button */}
+                <button
+                  onClick={() => handleBuyItem(item)}
+                  className="ml-4 px-4 py-2 bg-green-600 text-white rounded-md"
+                >
+                  Buy
+                </button>
               </div>
             </div>
           ))}
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-between mt-4">
+            <button
+              onClick={handleClearCart}
+              className="px-6 py-3 bg-red-500 text-white rounded-md"
+            >
+              Clear Cart
+            </button>
             <button
               onClick={handleCheckout}
               className="px-6 py-3 bg-yellow-500 text-white rounded-md"
             >
-              Buy Now
+              Checkout
             </button>
           </div>
         </div>

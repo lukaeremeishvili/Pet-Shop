@@ -48,9 +48,14 @@ const wishlistSlice = createSlice({
                 toast.error("Out of stock");
             }
         },
+        clearWishlist: (state) => {
+            state.items = [];
+            saveWishlistToStorage(state);
+            toast.success("Wishlist cleared");
+        },
     },
 });
 
-export const { addToWishlist, removeFromWishlist, moveToCart } = wishlistSlice.actions;
+export const { addToWishlist, removeFromWishlist, moveToCart, clearWishlist } = wishlistSlice.actions;
 export const selectWishlist = (state: RootState) => state.wishlist;
 export default wishlistSlice.reducer;

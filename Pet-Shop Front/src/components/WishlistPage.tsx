@@ -5,6 +5,7 @@ import {
   removeFromWishlist,
   moveToCart,
   selectWishlist,
+  clearWishlist,
 } from "../store/wishlistSlice";
 import { useState, useEffect } from "react";
 import { convertCurrency } from "../Services/exchange";
@@ -58,7 +59,7 @@ const WishlistPage = () => {
       const newConvertedPrices: { [key: string]: number } = {};
 
       for (const item of wishlistItems) {
-        const itemCurrency = itemCurrencyState[item.id] || currency; 
+        const itemCurrency = itemCurrencyState[item.id] || currency;
         if (itemCurrency === "USD") {
           const usdPrice = await convertCurrency(item.price, "GEL", "USD");
           if (usdPrice !== null) {
@@ -96,7 +97,10 @@ const WishlistPage = () => {
   ) => {
     const newItemCurrency = itemCurrencyState[itemId] === "USD" ? "GEL" : "USD";
     setItemCurrencyState((prev) => {
-      const newState: { [key: string]: "USD" | "GEL" } = { ...prev, [itemId]: newItemCurrency };
+      const newState: { [key: string]: "USD" | "GEL" } = {
+        ...prev,
+        [itemId]: newItemCurrency,
+      };
 
       localStorage.setItem("itemCurrencies", JSON.stringify(newState));
       return newState;
@@ -122,6 +126,10 @@ const WishlistPage = () => {
     return currency === "USD" ? "$" : "₾";
   };
 
+  const handleClearWishlist = () => {
+    dispatch(clearWishlist());
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-extralight mb-4 text-center">
@@ -140,7 +148,9 @@ const WishlistPage = () => {
             >
               <div className="flex items-center">
                 <img
-                src={`${new URL(`../assets/${item.image}`, import.meta.url).href}`}
+                  src={`${
+                    new URL(`../assets/${item.image}`, import.meta.url).href
+                  }`}
                   alt={item.name}
                   className="w-16 h-16 object-cover mr-4"
                 />
@@ -187,6 +197,14 @@ const WishlistPage = () => {
               </div>
             </div>
           ))}
+          <div className="flex justify-center mt-4">
+            <button
+              onClick={handleClearWishlist}
+              className="px-4 py-2 bg-red-500 text-white rounded-md"
+            >
+              Clear All
+            </button>
+          </div>
         </div>
       )}
     </div>

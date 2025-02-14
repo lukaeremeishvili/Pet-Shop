@@ -9,6 +9,8 @@ interface CartItem {
     quantity: number;
     stock: number;
     image: string;
+    type?: "animals" | "animals-with-categories";
+    category_uuid?: string;
 }
 interface CartState {
     items: CartItem[];

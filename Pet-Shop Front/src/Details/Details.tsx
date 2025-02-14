@@ -26,21 +26,23 @@ interface ProductDetails {
 }
 
 const Details = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id, source } = useParams<{ id: string; source?: string }>(); 
   const [product, setProduct] = useState<ProductDetails | null>(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/animals-with-categories/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_CRUDAPI_KEY}`,
-            },
-          }
-        );
+        let url = `${import.meta.env.VITE_API_URL}/animals/${id}`;
+        if (source === "category") {
+          url = `${import.meta.env.VITE_API_URL}/animals-with-categories/${id}`;
+        }
+
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_CRUDAPI_KEY}`,
+          },
+        });
         const data = await response.json();
         setProduct(data);
       } catch {
@@ -49,7 +51,7 @@ const Details = () => {
     };
 
     if (id) fetchProduct();
-  }, [id]);
+  }, [id, source]); 
 
   const handleAddToCart = () => {
     if (product) {
@@ -61,6 +63,8 @@ const Details = () => {
           quantity: 1,
           stock: product.stock,
           image: product.image,
+          type: source === "category" ? "animals-with-categories" : "animals",
+          category_uuid: product.category_uuid,
         })
       );
       toast.success("Item added to cart");
